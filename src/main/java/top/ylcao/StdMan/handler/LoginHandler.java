@@ -2,7 +2,6 @@ package top.ylcao.StdMan.handler;
 
 import top.ylcao.StdMan.sql.OperationMysql;
 import top.ylcao.StdMan.view.AdminPanelInter;
-import top.ylcao.StdMan.view.AllStudentsTable;
 import top.ylcao.StdMan.view.LoginInter;
 import top.ylcao.StdMan.main.Log;
 import javax.swing.*;
@@ -11,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoginHandler extends KeyAdapter implements ActionListener {
 
