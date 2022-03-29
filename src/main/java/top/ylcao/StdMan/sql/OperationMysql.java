@@ -86,14 +86,14 @@ public class OperationMysql {
             while (loginSqlResult.next()) {
                 // 如果当前语句不是最后一条则进入循环
                 // 判断密码是否一致
-                if (!password.equals(loginSqlResult.getString("password"))) {
-                    return false;
+                if (password.equals(loginSqlResult.getString("password"))) {
+                    return true;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return false;
     }
 
 
