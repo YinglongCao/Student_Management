@@ -4,7 +4,6 @@ import sun.swing.table.DefaultTableCellHeaderRenderer;
 import top.ylcao.StdMan.sql.OperationMysql;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
