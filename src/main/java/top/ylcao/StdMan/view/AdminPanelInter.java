@@ -28,7 +28,7 @@ public class AdminPanelInter extends JFrame {
     JButton addConfirmButton = new JButton("添加");
     // 删除学生============================
     JLabel deleteStudentLabel = new JLabel("删除学生");
-    JTextField deleteStudentNameField = new JTextField("学生姓名");
+    JTextField deleteStudentNameField = new JTextField("姓名");
     JButton deleteConfirmButton = new JButton("删除");
     JButton viewAllStudentTableButton = new JButton("查看所有学生");
     // ===================================
@@ -93,7 +93,7 @@ public class AdminPanelInter extends JFrame {
         addStudentSexField.setPreferredSize(addAndDeleteFieldDimension);
         // 添加学生身份证号输入框
         addStudentIDNumberField.setFont(MSYaHei);
-        addStudentIDNumberField.setPreferredSize(addAndDeleteFieldDimension);
+        addStudentIDNumberField.setPreferredSize(new Dimension(180, 20));
         // 添加学生年级输入框
         addStudentGradeField.setFont(MSYaHei);
         addStudentGradeField.setPreferredSize(addAndDeleteFieldDimension);
@@ -169,10 +169,6 @@ public class AdminPanelInter extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
     }
-
-
-
-
 
     public JTextField getAddStudentIDField() {
         return addStudentIDField;

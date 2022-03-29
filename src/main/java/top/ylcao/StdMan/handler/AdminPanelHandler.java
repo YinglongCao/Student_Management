@@ -44,7 +44,7 @@ public class AdminPanelHandler implements ActionListener {
                     JOptionPane.showMessageDialog(adminPanelInter, String.format("添加成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText()));
                 } else {
                     // 如果操作失败
-                    JOptionPane.showMessageDialog(adminPanelInter, "添加失败...");
+                    JOptionPane.showMessageDialog(adminPanelInter, "添加失败!可能已经有这个学生了");
                 }
             }
         } else if (buttonText.equals("删除")) {
@@ -57,14 +57,15 @@ public class AdminPanelHandler implements ActionListener {
                     JOptionPane.showMessageDialog(adminPanelInter, "删除成功!\n姓名:" + adminPanelInter.getDeleteStudentNameField().getText());
                 } else {
                     // 如果操作失败
-                    JOptionPane.showMessageDialog(adminPanelInter, "删除失败...");
+                    JOptionPane.showMessageDialog(adminPanelInter, "删除失败!可能没有这个学生");
                 }
             }
         } else if (buttonText.equals("查看所有学生")) {
             try {
-                if (this.allStudentsTable == null) {
-                    this.allStudentsTable = new AllStudentsTable(operationMysql);
+                if (this.allStudentsTable != null) {
+                    this.allStudentsTable.dispose();
                 }
+                this.allStudentsTable = new AllStudentsTable(operationMysql);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

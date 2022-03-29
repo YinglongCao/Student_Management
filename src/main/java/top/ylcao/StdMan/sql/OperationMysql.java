@@ -1,5 +1,6 @@
 package top.ylcao.StdMan.sql;
 
+import java.net.IDN;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +25,13 @@ public class OperationMysql {
 
         try {
             // 通过访问数据库的URL获取数据库连接对象
-            connection = DriverManager.getConnection("jdbc:mysql:"
+            this.connection = DriverManager.getConnection("jdbc:mysql:"
                     + String.format("//%s:%d/%s", IP, port, database), username, password);
             new Log().pLog(Log.OPERATION, "数据库连接成功");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        this.connection = connection;
-        this.sql = connection.createStatement();
+        this.sql = this.connection.createStatement();
     }
 
 
@@ -98,20 +98,44 @@ public class OperationMysql {
 
 
     public boolean addStudent(String ID, String name, String sex, String IDNumber, String grade, String studentClass) {
+        // 添加学生
         try {
-
-        } catch (Exception e) {
+            ResultSet loginSqlResult = this.sql.executeQuery(String.format("select * from students where ID = '%s'", ID));
+            boolean isExist = false;
+            while (loginSqlResult.next()) {
+                // 如果当前语句不是最后一条则进入循环
+                isExist = true;
+            }
+            if (isExist == true) {
+                return false;
+            }
+            this.sql.executeUpdate((String.format("INSERT INTO students (ID,name,sex,IDNumber,grade,class) VALUES ('%s','%s','%s','%s','%s','%s')", ID, name, sex, IDNumber, grade, studentClass)));
+            return true;
+            } catch (Exception e) {
             e.printStackTrace();
         }
+        // 插入失败
         return false;
     }
 
     public boolean deleteStudent(String name) {
+        // 删除学生
         try {
-
+            ResultSet loginSqlResult = this.sql.executeQuery(String.format("select * from students where name = '%s'", name));
+            boolean isExist = false;
+            while (loginSqlResult.next()) {
+                // 如果当前语句不是最后一条则进入循环
+                isExist = true;
+            }
+            if (isExist == true) {
+                this.sql.executeUpdate("delete from students where name = " + "'" + name + "'");
+                // 删除成功
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        // 删除失败
         return false;
     }
 
