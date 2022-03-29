@@ -96,6 +96,25 @@ public class OperationMysql {
         return true;
     }
 
+
+    public boolean addStudent(String ID, String name, String sex, String IDNumber, String grade, String studentClass) {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteStudent(String name) {
+        try {
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public ArrayList<HashMap<String, String>> getAllStudents() throws SQLException {
         // 所有学生的ArrayList
         ArrayList<HashMap<String, String>> allStudentInfo = new ArrayList<HashMap<String, String>>();
