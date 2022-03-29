@@ -106,7 +106,7 @@ public class OperationMysql {
                 // 如果当前语句不是最后一条则进入循环
                 isExist = true;
             }
-            if (isExist == true) {
+            if (isExist) {
                 return false;
             }
             this.sql.executeUpdate((String.format("INSERT INTO students (ID,name,sex,IDNumber,grade,class) VALUES ('%s','%s','%s','%s','%s','%s')", ID, name, sex, IDNumber, grade, studentClass)));
@@ -127,7 +127,7 @@ public class OperationMysql {
                 // 如果当前语句不是最后一条则进入循环
                 isExist = true;
             }
-            if (isExist == true) {
+            if (isExist) {
                 this.sql.executeUpdate("delete from students where name = " + "'" + name + "'");
                 // 删除成功
                 return true;
