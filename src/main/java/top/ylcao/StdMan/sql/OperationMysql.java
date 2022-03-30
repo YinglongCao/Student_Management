@@ -4,6 +4,7 @@ import java.net.IDN;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import top.ylcao.StdMan.main.Log;
 
@@ -138,6 +139,52 @@ public class OperationMysql {
         // 删除失败
         return false;
     }
+
+    public boolean editeStudent(String ID, String name, String sex, String IDNumber, String grade, String studentClass) {
+        // 添加学生
+        try {
+            ResultSet loginSqlResult = this.sql.executeQuery(String.format("select * from students where name = '%s'", name));
+            boolean isExist = false;
+            while (loginSqlResult.next()) {
+                // 如果当前语句不是最后一条则进入循环
+                isExist = true;
+            }
+            if (!isExist) {
+                return false;
+            }
+            deleteStudent(name);
+            this.sql.executeUpdate((String.format("INSERT INTO students (ID,name,sex,IDNumber,grade,class) VALUES ('%s','%s','%s','%s','%s','%s')", ID, name, sex, IDNumber, grade, studentClass)));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 插入失败
+        return false;
+    }
+
+    public HashMap<String, String> searchStudent(String name) {
+        // 搜索学生
+        try {
+            ResultSet loginSqlResult = this.sql.executeQuery(String.format("select * from students where name = '%s'", name));
+            boolean isExist = false;
+            HashMap<String, String> searchStudentHashMap = new HashMap<>();
+            while (loginSqlResult.next()) {
+                // 如果当前语句不是最后一条则进入循环
+                isExist = true;
+                setOneStudentInfo(loginSqlResult, searchStudentHashMap);
+            }
+            if (!isExist) {
+                return null;
+            }
+            return searchStudentHashMap;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 插入失败
+        return null;
+    }
+
+
 
     public ArrayList<HashMap<String, String>> getAllStudents() throws SQLException {
         // 所有学生的ArrayList

@@ -11,9 +11,6 @@ public class Main {
 
         LoginInter loginInter = new LoginInter(opMysql);
 
-
-
-
     }
 
 }

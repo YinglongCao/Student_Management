@@ -18,7 +18,7 @@ public class AdminPanelInter extends JFrame {
     // 标题===============================
     JLabel title = new JLabel("管理员面板", JLabel.CENTER);
     // 添加学生============================
-    JLabel addStudentLabel = new JLabel("添加学生");
+    JLabel addStudentLabel = new JLabel("修改/添加学生");
     JTextField addStudentIDField = new JTextField("学号");
     JTextField addStudentNameField = new JTextField("姓名");
     JTextField addStudentSexField = new JTextField("性别");
@@ -27,12 +27,14 @@ public class AdminPanelInter extends JFrame {
     JTextField addStudentClassField = new JTextField("班级");
     JButton addConfirmButton = new JButton("添加");
     // 删除学生============================
-    JLabel deleteStudentLabel = new JLabel("删除学生");
+    JLabel deleteStudentLabel = new JLabel("查询/删除学生");
     JTextField deleteStudentNameField = new JTextField("姓名");
     JButton deleteConfirmButton = new JButton("删除");
     JButton viewAllStudentTableButton = new JButton("查看所有学生");
     // ===================================
     JButton aboutButton = new JButton("关于");
+    JButton editeButton = new JButton("修改");
+    JButton searchButton = new JButton("查询");
 
     public AdminPanelInter(OperationMysql operationMysql) throws SQLException {
         super("学生管理系统 管理员面板");
@@ -58,12 +60,16 @@ public class AdminPanelInter extends JFrame {
         adminPanel.add(deleteConfirmButton);
         adminPanel.add(viewAllStudentTableButton);
         adminPanel.add(aboutButton);
+        adminPanel.add(editeButton);
+        adminPanel.add(searchButton);
 
         // 绑定事件监听器
         addConfirmButton.addActionListener(adminPanelHandler);
         deleteConfirmButton.addActionListener(adminPanelHandler);
         viewAllStudentTableButton.addActionListener(adminPanelHandler);
         aboutButton.addActionListener(adminPanelHandler);
+        editeButton.addActionListener(adminPanelHandler);
+        searchButton.addActionListener(adminPanelHandler);
 
 
         contentPane.add(adminPanel);
@@ -78,7 +84,7 @@ public class AdminPanelInter extends JFrame {
         title.setFont(new Font("微软雅黑", Font.PLAIN, 20));
 
         Font MSYaHei = new Font("微软雅黑", Font.PLAIN, 15);
-        Dimension addAndDeleteFieldDimension = new Dimension(120, 20);
+        Dimension addAndDeleteFieldDimension = new Dimension(140, 20);
 
         // 添加学生标签
         addStudentLabel.setFont(MSYaHei);
@@ -114,6 +120,8 @@ public class AdminPanelInter extends JFrame {
         viewAllStudentTableButton.setFont(MSYaHei);
         // 关于按钮
         aboutButton.setFont(MSYaHei);
+        editeButton.setFont(MSYaHei);
+        searchButton.setFont(MSYaHei);
 
         // 标题
         springLayout.putConstraint(SpringLayout.NORTH, title, 5, SpringLayout.NORTH, adminPanel);
@@ -144,7 +152,7 @@ public class AdminPanelInter extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, addConfirmButton, 5, SpringLayout.SOUTH, addStudentClassField);
 
         // 删除学生标签
-        springLayout.putConstraint(SpringLayout.WEST, deleteStudentLabel, 80, SpringLayout.EAST, addStudentLabel);
+        springLayout.putConstraint(SpringLayout.EAST, deleteStudentLabel, -(Spring.width(deleteStudentNameField).getValue() - Spring.width(deleteStudentLabel).getValue() + 15), SpringLayout.EAST, adminPanel);
         springLayout.putConstraint(SpringLayout.NORTH, deleteStudentLabel, 0, SpringLayout.NORTH, addStudentLabel);
         // 删除学生输入框
         springLayout.putConstraint(SpringLayout.WEST, deleteStudentNameField, -5, SpringLayout.WEST, deleteStudentLabel);
@@ -159,6 +167,12 @@ public class AdminPanelInter extends JFrame {
         // 查看学生界面按钮
         springLayout.putConstraint(SpringLayout.WEST, viewAllStudentTableButton, 0, SpringLayout.WEST, aboutButton);
         springLayout.putConstraint(SpringLayout.SOUTH, viewAllStudentTableButton, -5, SpringLayout.NORTH, aboutButton);
+
+        springLayout.putConstraint(SpringLayout.WEST, editeButton, -1, SpringLayout.WEST, addStudentClassField);
+        springLayout.putConstraint(SpringLayout.NORTH, editeButton, 5, SpringLayout.SOUTH, addStudentClassField);
+
+        springLayout.putConstraint(SpringLayout.WEST, searchButton, -5, SpringLayout.WEST, deleteStudentNameField);
+        springLayout.putConstraint(SpringLayout.NORTH, searchButton, 5, SpringLayout.SOUTH, deleteStudentNameField);
 
 
         // 自定义图标
