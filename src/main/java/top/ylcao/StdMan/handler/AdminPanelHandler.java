@@ -24,6 +24,7 @@ public class AdminPanelHandler implements ActionListener {
         this.operationMysql = operationMysql;
         this.log = new Log();
         this.allStudentsTable = null;
+        log.pLog(Log.OPERATION, "AdminPanelHandler初始化完成");
     }
 
 
@@ -33,68 +34,81 @@ public class AdminPanelHandler implements ActionListener {
         JButton sourceButton = (JButton) e.getSource();
         String buttonText = sourceButton.getText();
 
-        if (buttonText.equals("添加")) {
-            // 添加学生
-            if (adminPanelInter.getAddStudentIDField().getText().equals("") || adminPanelInter.getAddStudentNameField().getText().equals("") || adminPanelInter.getAddStudentSexField().getText().equals("") || adminPanelInter.getAddStudentIDNumberField().getText().equals("") || adminPanelInter.getAddStudentGradeField().getText().equals("") || adminPanelInter.getAddStudentClassField().getText().equals("")) {
-                // 是否信息输入完全
-                JOptionPane.showMessageDialog(adminPanelInter, "请完整输入学生信息!");
-            } else {
+        switch (buttonText) {
+            case "添加":
                 // 添加学生
-                if (operationMysql.addStudent(adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText())) {
-                    // 如果操作成功
-                    JOptionPane.showMessageDialog(adminPanelInter, String.format("添加成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText()));
+                if (adminPanelInter.getAddStudentIDField().getText().equals("") || adminPanelInter.getAddStudentNameField().getText().equals("") || adminPanelInter.getAddStudentSexField().getText().equals("") || adminPanelInter.getAddStudentIDNumberField().getText().equals("") || adminPanelInter.getAddStudentGradeField().getText().equals("") || adminPanelInter.getAddStudentClassField().getText().equals("")) {
+                    // 是否信息输入完全
+                    JOptionPane.showMessageDialog(adminPanelInter, "请完整输入学生信息!");
                 } else {
-                    // 如果操作失败
-                    JOptionPane.showMessageDialog(adminPanelInter, "添加失败!可能已经有这个学生了");
+                    // 添加学生
+                    if (operationMysql.addStudent(adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText())) {
+                        // 如果操作成功
+                        JOptionPane.showMessageDialog(adminPanelInter, String.format("添加成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText()));
+                    } else {
+                        // 如果操作失败
+                        JOptionPane.showMessageDialog(adminPanelInter, "添加失败!可能已经有这个学生了");
+                    }
                 }
-            }
-        } else if (buttonText.equals("删除")) {
-            if (adminPanelInter.getDeleteStudentNameField().getText().equals("")) {
-                JOptionPane.showMessageDialog(adminPanelInter, "请输入要删除的学生姓名!");
-            } else {
-                // 删除学生
-                if (operationMysql.deleteStudent(adminPanelInter.getDeleteStudentNameField().getText())) {
-                    // 如果操作成功
-                    JOptionPane.showMessageDialog(adminPanelInter, "删除成功!\n姓名:" + adminPanelInter.getDeleteStudentNameField().getText());
+                log.pLog(Log.OPERATION, "添加学生完成");
+                break;
+            case "删除":
+                if (adminPanelInter.getDeleteStudentNameField().getText().equals("")) {
+                    JOptionPane.showMessageDialog(adminPanelInter, "请输入要删除的学生姓名!");
                 } else {
-                    // 如果操作失败
-                    JOptionPane.showMessageDialog(adminPanelInter, "删除失败!可能没有这个学生");
+                    // 删除学生
+                    if (operationMysql.deleteStudent(adminPanelInter.getDeleteStudentNameField().getText())) {
+                        // 如果操作成功
+                        JOptionPane.showMessageDialog(adminPanelInter, "删除成功!\n姓名:" + adminPanelInter.getDeleteStudentNameField().getText());
+                    } else {
+                        // 如果操作失败
+                        JOptionPane.showMessageDialog(adminPanelInter, "删除失败!可能没有这个学生");
+                    }
                 }
-            }
-        } else if (buttonText.equals("查看所有学生")) {
-            try {
-                if (this.allStudentsTable != null) {
-                    this.allStudentsTable.dispose();
+                log.pLog(Log.OPERATION, "删除学生完成");
+                break;
+            case "查看所有学生":
+                try {
+                    if (this.allStudentsTable != null) {
+                        this.allStudentsTable.dispose();
+                    }
+                    this.allStudentsTable = new AllStudentsTable(operationMysql);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
                 }
-                this.allStudentsTable = new AllStudentsTable(operationMysql);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } else if (buttonText.equals("关于")) {
-            JOptionPane.showMessageDialog(adminPanelInter, "长沙学院 20计科03 曹应龙编写\n个人博客地址 http://ylcao.top\n个人Github地址 https://github.com/YinglongCao");
-        } else if (buttonText.equals("修改")) {
-            // 修改学生
-            if (adminPanelInter.getAddStudentIDField().getText().equals("") || adminPanelInter.getAddStudentNameField().getText().equals("") || adminPanelInter.getAddStudentSexField().getText().equals("") || adminPanelInter.getAddStudentIDNumberField().getText().equals("") || adminPanelInter.getAddStudentGradeField().getText().equals("") || adminPanelInter.getAddStudentClassField().getText().equals("")) {
-                // 是否信息输入完全
-                JOptionPane.showMessageDialog(adminPanelInter, "请完整输入学生信息!");
-            } else {
+                log.pLog(Log.OPERATION, "查看所有学生完成");
+                break;
+            case "关于":
+                JOptionPane.showMessageDialog(adminPanelInter, "长沙学院 20计科03 曹应龙编写\n个人博客地址 http://ylcao.top\n个人Github地址 https://github.com/YinglongCao");
+                log.pLog(Log.OPERATION, "关于完成");
+                break;
+            case "修改":
                 // 修改学生
-                if (operationMysql.editeStudent(adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText())) {
-                    // 如果操作成功
-                    JOptionPane.showMessageDialog(adminPanelInter, String.format("添加成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText()));
+                if (adminPanelInter.getAddStudentIDField().getText().equals("") || adminPanelInter.getAddStudentNameField().getText().equals("") || adminPanelInter.getAddStudentSexField().getText().equals("") || adminPanelInter.getAddStudentIDNumberField().getText().equals("") || adminPanelInter.getAddStudentGradeField().getText().equals("") || adminPanelInter.getAddStudentClassField().getText().equals("")) {
+                    // 是否信息输入完全
+                    JOptionPane.showMessageDialog(adminPanelInter, "请完整输入学生信息!");
                 } else {
-                    // 如果操作失败
-                    JOptionPane.showMessageDialog(adminPanelInter, "添加失败!可能没有这个学生");
+                    // 修改学生
+                    if (operationMysql.editeStudent(adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText())) {
+                        // 如果操作成功
+                        JOptionPane.showMessageDialog(adminPanelInter, String.format("修改成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", adminPanelInter.getAddStudentIDField().getText(), adminPanelInter.getAddStudentNameField().getText(), adminPanelInter.getAddStudentSexField().getText(), adminPanelInter.getAddStudentIDNumberField().getText(), adminPanelInter.getAddStudentGradeField().getText(), adminPanelInter.getAddStudentClassField().getText()));
+                    } else {
+                        // 如果操作失败
+                        JOptionPane.showMessageDialog(adminPanelInter, "修改失败!可能没有这个学生");
+                    }
                 }
-            }
-        } else if (buttonText.equals("查询")) {
-            HashMap<String, String> searchStudentHashMap = operationMysql.searchStudentWithName(adminPanelInter.getDeleteStudentNameField().getText());
-            System.out.println(searchStudentHashMap);
-            if (searchStudentHashMap.size() > 0) {
-                JOptionPane.showMessageDialog(adminPanelInter, String.format("查询成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", searchStudentHashMap.get("ID"), searchStudentHashMap.get("name"), searchStudentHashMap.get("sex"), searchStudentHashMap.get("IDNumber"), searchStudentHashMap.get("grade"), searchStudentHashMap.get("class")));
-            } else {
-                JOptionPane.showMessageDialog(adminPanelInter, "查询失败!可能没有这个学生");
-            }
+                log.pLog(Log.OPERATION, "修改学生完成");
+                break;
+            case "查询":
+                HashMap<String, String> searchStudentHashMap = operationMysql.searchStudentWithName(adminPanelInter.getDeleteStudentNameField().getText());
+                System.out.println(searchStudentHashMap);
+                if (searchStudentHashMap.size() > 0) {
+                    JOptionPane.showMessageDialog(adminPanelInter, String.format("查询成功!\n" + "学号:%s\n姓名:%s\n性别:%s\n身份证号:%s\n年级:%s\n班级:%s", searchStudentHashMap.get("ID"), searchStudentHashMap.get("name"), searchStudentHashMap.get("sex"), searchStudentHashMap.get("IDNumber"), searchStudentHashMap.get("grade"), searchStudentHashMap.get("class")));
+                } else {
+                    JOptionPane.showMessageDialog(adminPanelInter, "查询失败!可能没有这个学生");
+                }
+                log.pLog(Log.OPERATION, "查询学生完成");
+                break;
         }
 
     }
