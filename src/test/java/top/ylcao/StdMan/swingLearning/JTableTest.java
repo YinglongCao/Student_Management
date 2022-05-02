@@ -1,4 +1,4 @@
-package top.ylcao.StdMan;
+package top.ylcao.StdMan.swingLearning;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

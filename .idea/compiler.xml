@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="StdMan" options="-verbose -bootclasspath /Library/Java/JavaVirtualMachines/jdk1.8.0_202.jdk/Contents/Home/jre/lib/rt.jar" />
+      <module name="StdMan" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk-18.0.1/lib/rt.jar&quot;" />
     </option>
   </component>
 </project>
