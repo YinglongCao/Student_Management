@@ -152,7 +152,7 @@ public class AdminPanelInter extends JFrame {
         springLayout.putConstraint(SpringLayout.NORTH, addConfirmButton, 5, SpringLayout.SOUTH, addStudentClassField);
 
         // 删除学生标签
-        springLayout.putConstraint(SpringLayout.EAST, deleteStudentLabel, -(Spring.width(deleteStudentNameField).getValue() - Spring.width(deleteStudentLabel).getValue() + 15), SpringLayout.EAST, adminPanel);
+        springLayout.putConstraint(SpringLayout.EAST, deleteStudentLabel, -(Spring.width(deleteStudentNameField).getValue() - Spring.width(deleteStudentLabel).getValue() + 5), SpringLayout.EAST, adminPanel);
         springLayout.putConstraint(SpringLayout.NORTH, deleteStudentLabel, 0, SpringLayout.NORTH, addStudentLabel);
         // 删除学生输入框
         springLayout.putConstraint(SpringLayout.WEST, deleteStudentNameField, -5, SpringLayout.WEST, deleteStudentLabel);
@@ -178,7 +178,7 @@ public class AdminPanelInter extends JFrame {
         // 自定义图标
         setIconImage(new ImageIcon(Objects.requireNonNull(LoginInter.class.getClassLoader().getResource("icon.png"))).getImage());
         // 设置尺寸
-        setSize(320, 280);
+        setSize(340, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
